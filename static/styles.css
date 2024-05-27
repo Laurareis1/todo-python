@@ -1,25 +1,42 @@
-body {
-    font-family: Arial, sans-serif;
-}
-
+/* Estilos para o contêiner principal */
 .container {
-    width: 50%;
-    margin: 0 auto;
-    text-align: center;
+    display: flex; /* Usar flexbox para alinhar os itens */
+    flex-direction: column; /* Empilhar os itens verticalmente */
+    align-items: center; /* Centralizar os itens horizontalmente */
+    justify-content: center; /* Centralizar os itens verticalmente */
+    height: 100vh; /* Definir altura para ocupar toda a altura da viewport */
 }
 
-ul {
-    list-style-type: none;
+/* Estilos para o formulário de adição de tarefas */
+.form-container {
+    text-align: center; /* Centralizar o texto horizontalmente */
+}
+
+/* Estilos para a lista de opções */
+.option-container {
+    text-align: center; /* Centralizar o texto horizontalmente */
+}
+
+.option-list {
+    list-style-type: none; /* Remover marcadores padrão */
     padding: 0;
+    display: inline-block; /* Tornar a lista em linha */
 }
 
-li {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px;
+.option-list li {
+    margin-bottom: 10px; /* Espaçamento entre os itens */
 }
 
-.completed {
-    text-decoration: line-through;
-    color: gray;
+.option-list li a {
+    display: inline-block; /* Tornar os itens de lista em linha */
+    padding: 10px; /* Espaçamento interno */
+    background-color: #f0f0f0; /* Cor de fundo */
+    color: #333; /* Cor do texto */
+    text-decoration: none; /* Remover sublinhado do link */
+    border-radius: 5px; /* Borda arredondada */
+    transition: background-color 0.3s; /* Transição suave ao passar o mouse */
+}
+
+.option-list li a:hover {
+    background-color: #e0e0e0; /* Cor de fundo ao passar o mouse */
 }
