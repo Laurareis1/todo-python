@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciador de Tarefas</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Gerenciador de Tarefas</h1>
+        <form action="/add" method="post">
+            <input type="text" name="description" placeholder="Nova tarefa" required>
+            <button type="submit">Adicionar</button>
+        </form>
+        <ul>
+            {% for task in tasks %}
+            <li>
+                <span class="{{ 'completed' if task['completed'] else '' }}">{{ task['description'] }}</span>
+                <form action="/complete/{{ task['id'] }}" method="post" style="display:inline;">
+                    <button type="submit">Concluir</button>
+                </form>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
