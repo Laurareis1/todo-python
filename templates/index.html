@@ -4,24 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gerenciador de Tarefas</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* Estilos para centralizar e esconder o formulário */
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        #form-container {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Gerenciador de Tarefas</h1>
-        <div class="form-container">
-            <form action="/add" method="post">
-                <input type="text" name="description" placeholder="Nova tarefa" required>
+        <div id="menu">
+            <ul class="option-list">
+                <li><a href="#" onclick="toggleForm()">Adicionar Tarefa</a></li>
+                <li><a href="#" onclick="listarTarefas()">Listar Tarefas</a></li> 
+            </ul>
+        </div>
+        <div id="form-container">
+            <form id="add-task-form">
+                <input type="text" id="task-input" placeholder="Nova tarefa" required>
                 <button type="submit">Adicionar</button>
             </form>
         </div>
-        <div class="option-container">
-            <ul class="option-list">
-                <li><a href="/add">Adicionar Tarefa</a></li>
-                <li><a href="/list">Listar Tarefas</a></li>
-                <!-- Adicione mais opções conforme necessário -->
-            </ul>
+        <div id="lista-tarefas" style="display: none;">
+            <h2>Tarefas</h2>
+            <ul id="lista-tarefas-container"></ul>
         </div>
     </div>
+
+    <script>
+        var tarefas = []; // Array para armazenar as tarefas
+
+        // Adiciona uma nova tarefa à lista
+        function adicionarTarefa(tarefa) {
+            tarefas.push(tarefa);
+        }
+
+        // Exibe todas as tarefas na lista de tarefas
+        function exibirTarefas() {
+            var listaTarefasContainer = document.getElementById("lista-tarefas-container");
+            listaTarefasContainer.innerHTML = ""; // Limpa a lista de tarefas antes de adicionar as novas tarefas
+
+            tarefas.forEach(function(tarefa) {
+                var li = document.createElement("li");
+                li.textContent = tarefa;
+                listaTarefasContainer.appendChild(li);
+            });
+        }
+
+        // Função para alternar a exibição do formulário
+        function toggleForm() {
+            var formContainer = document.getElementById("form-container");
+            if (formContainer.style.display === "none") {
+                formContainer.style.display = "block";
+                document.getElementById("lista-tarefas").style.display = "none"; // Esconde a lista de tarefas se estiver visível
+            } else {
+                formContainer.style.display = "none";
+            }
+        }
+
+        // Função para listar as tarefas
+        function listarTarefas() {
+            exibirTarefas(); // Exibe as tarefas ao clicar em "Listar Tarefas"
+
+            // Exibe a lista de tarefas e oculta o formulário
+            document.getElementById("lista-tarefas").style.display = "block";
+            document.getElementById("form-container").style.display = "none";
+        }
+
+        // Adiciona um evento de submissão ao formulário de adição de tarefa
+        document.getElementById("add-task-form").addEventListener("submit", function(event) {
+            event.preventDefault(); // Previne o comportamento padrão de submissão do formulário
+
+            var novaTarefa = document.getElementById("task-input").value; // Obtém o valor do input
+
+            if (novaTarefa.trim() !== "") { // Verifica se a tarefa não está em branco
+                adicionarTarefa(novaTarefa); // Adiciona a nova tarefa ao array
+                document.getElementById("task-input").value = ""; // Limpa o input
+            }
+
+            exibirTarefas(); // Atualiza a lista de tarefas exibida
+
+            // Exibe a lista de tarefas e oculta o formulário
+            document.getElementById("lista-tarefas").style.display = "block";
+            document.getElementById("form-container").style.display = "none";
+        });
+    </script>
 </body>
 </html>
